@@ -12,11 +12,12 @@ def generate_flashcard_data(word: str, context_sentence: str = "") -> dict:
     """
     核心业务函数：传入一个单词和语境，返回结构化的闪卡字典。
     """
-    # API调用地址url和通行证headers
+    # 请求的API调用地址url
     url = "https://api.deepseek.com/chat/completions"  
+    # 请求内容类型和授权认证
     headers = {"Content-Type": "application/json", "Authorization": f"Bearer {API_KEY}"}
 
-    # 提示词工程 (Prompt Engineering)：用极其严苛的指令框定 AI
+    # 提示词工程 (Prompt Engineering)：设定AI类型，规定返回格式
     system_prompt = """
     你是一个严谨的英语考研词汇专家。
     请严格按照以下 JSON 格式返回单词的解析，绝对不要输出任何 markdown 标记、问候语或其他解释文字：
@@ -36,16 +37,16 @@ def generate_flashcard_data(word: str, context_sentence: str = "") -> dict:
     }
     """
 
-    # 组装用户真实问题
+    # 用户真实问题（提示词）
     user_prompt = f"请解析单词：'{word}'。它出现的语境是：'{context_sentence}'"
-
+    # 请求的内容数据
     data = {
         "model": "deepseek-chat",
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_prompt},
         ],
-        # 这是一个高阶技巧：强制告诉模型我们要的结果是 JSON 对象 (DeepSeek/OpenAI 支持)
+        # 强制告诉模型我们要的结果是 JSON 对象
         "response_format": {"type": "json_object"},
     }
 
@@ -54,32 +55,32 @@ def generate_flashcard_data(word: str, context_sentence: str = "") -> dict:
         response = requests.post(url, headers=headers, json=data)
         response.raise_for_status()
 
-        # 拿到大模型返回的纯文本流
+        # 拿到大模型返回的纯文本流，选取choices第一个答案message里的content
         answer_text = response.json()["choices"][0]["message"]["content"]
 
         # 反序列化：把 JSON 字符串转换成 Python 可以直接操作的字典
         flashcard_dict = json.loads(answer_text)
         return flashcard_dict
-
+    # 请求失败提醒
     except Exception as e:
         print(f"❌ 解析单词 '{word}' 时出错: {e}")
         return None
 
 
-# 本地测试逻辑
+# 此文件内测试调用逻辑
 if __name__ == "__main__":
-    # 我们换一个考研英语中极其经典的易混淆词作为测试
+    
     test_word = "complement"
     test_context = "A fine wine is a perfect complement to the meal."
 
     print(f"正在为 '{test_word}' 呼叫 AI 生成结构化数据（包含易混淆词）...\n")
 
     result = generate_flashcard_data(test_word, test_context)
-
+  
     if result:
-        print("🎉 成功获取升级版字典！\n")
+        print("成功获取升级版字典！\n")
 
-        # 优雅地打印易混淆词模块，体验一下未来的终端界面效果
+        # 按照提示词格式打印内容
         print("=" * 50)
         print(f"📚 单词: {result['word']} [{result['phonetic']}]")
         print(f"💡 释义: {result['translation']}")

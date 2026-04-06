@@ -83,7 +83,7 @@ AI 引擎： 兼容 OpenAI 接口格式的大语言模型 (如 DeepSeek-Chat)
 
 [x] Step 2: AI 核心通信模块打通 (Prompt 调优与 JSON 数据反序列化)
 
-[ ] Step 3: 数据库架构设计 (SQLAlchemy 模型构建与词库导入)
+[x] Step 3: 数据库架构设计 (SQLAlchemy 模型构建与词库导入)
 
 [ ] Step 4: 网页文本解析模块 (爬虫与 NLP 分词)
 
