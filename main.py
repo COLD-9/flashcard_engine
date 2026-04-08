@@ -1,0 +1,1 @@
+from src.nlp_core import generate_flashcard_data

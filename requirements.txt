@@ -1,8 +1,16 @@
 certifi==2026.2.25
 charset-normalizer==3.4.7
 idna==3.11
+linkify-it-py==2.0.3
+markdown-it-py==3.0.0
+mdit-py-plugins==0.4.2
+mdurl==0.1.2
+Pygments==2.20.0
 python-dotenv==1.0.1
 requests==2.31.0
+rich==14.3.3
 SQLAlchemy==2.0.29
+textual==0.52.1
 typing_extensions==4.15.0
+uc-micro-py==1.0.3
 urllib3==2.6.3
