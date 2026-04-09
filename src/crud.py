@@ -1,4 +1,11 @@
-from db_models import SessionLocal, Flashcard, ConfusingWord
+from src.db_models import SessionLocal, Flashcard, ConfusingWord, SyllabusWord
+
+
+def load_syllabus_words() -> set[str]:
+    """读取大纲词库，返回小写化的单词集合。表为空时返回空集合。"""
+    with SessionLocal() as session:
+        rows = session.query(SyllabusWord.word).all()
+    return {row[0].lower() for row in rows if row[0]}
 
 
 def save_flashcard_to_db(card_data: dict):
@@ -59,9 +66,6 @@ def save_flashcard_to_db(card_data: dict):
             session.rollback()
             print(f"入库彻底失败: {e}")
             return False
-
-
-
 
 
 if __name__ == "__main__":

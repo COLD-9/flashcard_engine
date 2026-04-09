@@ -42,7 +42,7 @@ flashcard_engine/
 ├── .env                       # 环境变量文件 (存放 API Key，绝对不上传 Git)
 ├── .gitignore                 # Git 忽略配置
 ├── requirements.txt           # 项目依赖包清单
-├── main.py                    # 🚧 系统总指挥 (待串联)
+├── main.py                    # ✅ 系统总指挥 (FlashcardEngineApp 全链路状态机)
 └── README.md                  # 项目说明文档
 
  📅 开发进度与路线图 (Roadmap)
@@ -65,13 +65,15 @@ flashcard_engine/
 
 [x] 劫持并重写 W/S/A/D 与 Space 按键绑定，实现丝滑的元素搬运与光标继承。
 
-[ ] Phase 4: 全链路串联 (Next Step)
+[x] Phase 4: 全链路串联 (DONE)
 
-[ ] 接入 RSS 新闻源，实现首页 Dashboard 的动态信息流展示。
+[x] 接入 RSS 新闻源，实现首页 Dashboard 的动态信息流展示。
 
-[ ] 结合 newspaper3k 实现后台静默文章提取。
+[x] 结合 newspaper3k 实现后台静默文章提取（强抓 + HTML 注入绕反爬）。
 
-[ ] 彻底打通前台 UI (tui_app.py) 与后台引擎 (nlp_core.py + crud.py)。
+[x] 彻底打通前台 UI 与后台引擎：RSS 列表 → 沉浸式阅读视图 → 双栏穿梭选词 → AI 解析入库，全链路异步消息驱动。
+
+[x] 接入大纲词库交集过滤（syllabus_words 表非空时自动按考研/四六级词库过筛，否则回退截断模式）。
 
 [ ] Phase 5: 复习调度系统
 
